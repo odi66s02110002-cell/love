@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Love Story ❤️</title>
+  <style>
+    :root {
+      --primary-color: #ff758c;
+      --secondary-color: #ff7eb3;
+      --bg-color: #fff0f5;
+      --card-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--bg-color), #ffe6ea);
+      color: #444;
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* 頂部標題與音樂控制 */
+    header {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .music-btn {
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 117, 140, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* 卡片通用樣式 */
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .card h2 {
+      color: var(--primary-color);
+      margin-bottom: 16px;
+      font-size: 1.3rem;
+      border-left: 4px solid var(--secondary-color);
+      padding-left: 8px;
+    }
+
+    /* 互動問答區 */
+    .quiz-options button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: white;
+      border: 1.5px solid #ffccd5;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    .quiz-options button:hover {
+      background: #ffe6ea;
+      border-color: var(--primary-color);
+    }
+
+    .quiz-result {
+      margin-top: 12px;
+      font-weight: bold;
+      text-align: center;
+      min-height: 24px;
+    }
+
+    /* 相片區 */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .photo-grid img:hover {
+      transform: scale(1.03);
+    }
+
+    /* 影片區 */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 比例 */
+      height: 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .video-wrapper iframe, .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- 頂部與音樂 -->
+    <header>
+      <h1>💖 Our Special Moments 💖</h1>
+      <p>記錄我們一起走過的每一個瞬間</p>
+      <br>
+      <button class="music-btn" onclick="toggleMusic()">🎵 播放 / 暫停背景音樂</button>
+      <!-- 請替換為你想要的音樂連結 (mp3) -->
+      <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3"></audio>
+    </header>
+
+    <!-- 1. 互動問答 -->
+    <div class="card">
+      <h2>✨ 甜蜜小問答</h2>
+      <p id="quiz-question" style="margin-bottom: 12px; font-weight: 500;">問題：我們第一次約會的地點在哪裡？</p>
+      <div class="quiz-options">
+        <button onclick="checkAnswer(false)">A. 電影院</button>
+        <button onclick="checkAnswer(true)">B. 海邊咖啡廳（正確答案）</button>
+        <button onclick="checkAnswer(false)">C. 甜品店</button>
+      </div>
+      <div class="quiz-result" id="quiz-result"></div>
+    </div>
+
+    <!-- 2. 照片回憶 -->
+    <div class="card">
+      <h2>📸 我們的回憶相簿</h2>
+      <div class="photo-grid">
+        <!-- 替換成你們的相片網址或圖片檔名 -->
+        <img src="https://picsum.photos/400/500?random=1" alt="回憶 1">
+        <img src="https://picsum.photos/400/500?random=2" alt="回憶 2">
+        <img src="https://picsum.photos/400/500?random=3" alt="回憶 3">
+        <img src="https://picsum.photos/400/500?random=4" alt="回憶 4">
+      </div>
+    </div>
+
+    <!-- 3. 影片專區 -->
+    <div class="card">
+      <h2>🎬 甜蜜影片</h2>
+      <div class="video-wrapper">
+        <!-- 可以放 YouTube 嵌入影片，或者將 <video> 標籤取消註釋使用本機影片 -->
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+        <!-- <video controls src="your-video.mp4"></video> -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 音樂控制
+    const music = document.getElementById('bgMusic');
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+
+    // 問答互動
+    function checkAnswer(isCorrect) {
+      const resultDiv = document.getElementById('quiz-result');
+      if (isCorrect) {
+        resultDiv.style.color = '#e63946';
+        resultDiv.textContent = '🎉 答對了！獎勵一個大大的擁抱 💕';
+      } else {
+        resultDiv.style.color = '#888';
+        resultDiv.textContent = '🙈 哎呀答錯了，罰你想起那一天！再試一次～';
+      }
+    }
+  </script>
+</body>
+</html>
