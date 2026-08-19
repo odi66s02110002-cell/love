@@ -3,136 +3,234 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Love Story ❤️</title>
+  <title>七夕快樂 ❤️ 我們的專屬回憶</title>
   <style>
     :root {
-      --primary-color: #ff758c;
-      --secondary-color: #ff7eb3;
-      --bg-color: #fff0f5;
-      --card-bg: rgba(255, 255, 255, 0.9);
+      --primary-color: #ff4d6d;
+      --secondary-color: #c9184a;
+      --accent-color: #ff758f;
+      --bg-gradient: linear-gradient(135deg, #1a0826 0%, #3a0ca3 50%, #7209b7 100%);
+      --card-bg: rgba(255, 255, 255, 0.92);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, var(--bg-color), #ffe6ea);
-      color: #444;
-      padding: 20px 10px;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: #333;
+      padding: 30px 15px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      overflow-x: hidden;
     }
 
+    /* 飄落愛心背景動畫容器 */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .heart-flake {
+      position: absolute;
+      top: -10%;
+      user-select: none;
+      animation-name: heartFall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes heartFall {
+      0% {
+        top: -10%;
+        transform: translateX(0) rotate(0deg) scale(0.8);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateX(30px) rotate(180deg) scale(1.1);
+      }
+      100% {
+        top: 105%;
+        transform: translateX(-30px) rotate(360deg) scale(0.8);
+        opacity: 0.2;
+      }
+    }
+
+    /* 主內容容器 */
     .container {
-      max-width: 700px;
+      max-width: 680px;
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 24px;
+      z-index: 2;
     }
 
-    /* 頂部標題與音樂控制 */
+    /* 頂部標題區 */
     header {
       text-align: center;
-      padding: 20px 0;
+      padding: 20px 10px;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
 
-    h1 {
-      color: var(--primary-color);
-      font-size: 2rem;
+    header h1 {
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      color: #ffccd5;
       margin-bottom: 8px;
     }
 
+    header p {
+      font-size: 1rem;
+      color: #f8edeb;
+      opacity: 0.9;
+    }
+
+    /* 音樂播放器按鈕 */
+    .music-player-wrap {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
     .music-btn {
-      background: var(--primary-color);
+      background: linear-gradient(45deg, #ff4d6d, #ff758f);
       border: none;
       color: white;
-      padding: 10px 18px;
-      border-radius: 25px;
-      font-size: 14px;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(255, 117, 140, 0.3);
-      transition: transform 0.2s;
+      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
     }
 
     .music-btn:hover {
       transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 77, 109, 0.6);
     }
 
-    /* 卡片通用樣式 */
+    .music-btn.playing .disc-icon {
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* 卡片通用設計 */
     .card {
       background: var(--card-bg);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 24px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      backdrop-filter: blur(5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     .card h2 {
-      color: var(--primary-color);
+      color: var(--secondary-color);
       margin-bottom: 16px;
       font-size: 1.3rem;
-      border-left: 4px solid var(--secondary-color);
-      padding-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px dashed #ffccd5;
+      padding-bottom: 8px;
     }
 
-    /* 互動問答區 */
+    /* 1. 互動問答 */
+    .quiz-box p {
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+      font-weight: 600;
+      color: #444;
+    }
+
     .quiz-options button {
       display: block;
       width: 100%;
-      padding: 12px;
+      padding: 12px 16px;
       margin-bottom: 10px;
-      background: white;
+      background: #fff;
       border: 1.5px solid #ffccd5;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
       font-size: 15px;
+      color: #555;
+      text-align: left;
       transition: all 0.2s;
     }
 
     .quiz-options button:hover {
-      background: #ffe6ea;
+      background: #fff0f3;
       border-color: var(--primary-color);
+      transform: translateX(4px);
     }
 
     .quiz-result {
-      margin-top: 12px;
+      margin-top: 14px;
       font-weight: bold;
       text-align: center;
       min-height: 24px;
+      font-size: 1.05rem;
     }
 
-    /* 相片區 */
+    /* 2. 相簿 */
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
       gap: 12px;
     }
 
-    .photo-grid img {
+    .photo-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      aspect-ratio: 1;
+    }
+
+    .photo-item img {
       width: 100%;
-      height: 160px;
+      height: 100%;
       object-fit: cover;
-      border-radius: 10px;
-      transition: transform 0.3s;
+      transition: transform 0.3s ease;
     }
 
-    .photo-grid img:hover {
-      transform: scale(1.03);
+    .photo-item:hover img {
+      transform: scale(1.08);
     }
 
-    /* 影片區 */
+    /* 3. 影片 */
     .video-wrapper {
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 比例 */
+      padding-bottom: 56.25%;
       height: 0;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
+      background: #000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
 
     .video-wrapper iframe, .video-wrapper video {
@@ -147,72 +245,122 @@
 </head>
 <body>
 
+  <!-- 背景飄落愛心 -->
+  <div class="hearts-container" id="heartsContainer"></div>
+
   <div class="container">
-    <!-- 頂部與音樂 -->
+    <!-- 頂部與音樂播放 -->
     <header>
-      <h1>💖 Our Special Moments 💖</h1>
-      <p>記錄我們一起走過的每一個瞬間</p>
-      <br>
-      <button class="music-btn" onclick="toggleMusic()">🎵 播放 / 暫停背景音樂</button>
-      <!-- 請替換為你想要的音樂連結 (mp3) -->
-      <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3"></audio>
+      <h1>✨ 七夕快樂，我的摯愛 ✨</h1>
+      <p>願銀河浪漫，不及我們眼中的星光 🌌</p>
+      
+      <div class="music-player-wrap">
+        <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+          <span class="disc-icon">💿</span> <span id="musicText">點擊播放專屬音樂</span>
+        </button>
+        <!-- 
+          【自訂 MP3 設定】：
+          如果你的 MP3 上傳到同一個 GitHub 庫且檔名為 music.mp3，請將 src 改為 "music.mp3"
+        -->
+        <audio id="bgMusic" loop src="music.mp3"></audio>
+      </div>
     </header>
 
-    <!-- 1. 互動問答 -->
-    <div class="card">
-      <h2>✨ 甜蜜小問答</h2>
-      <p id="quiz-question" style="margin-bottom: 12px; font-weight: 500;">問題：我們第一次約會的地點在哪裡？</p>
+    <!-- 1. 互動問答區 -->
+    <div class="card quiz-box">
+      <h2>💌 七夕小默契測驗</h2>
+      <p>問題：在你的心目中，我們一起度過最難忘的時刻是？</p>
       <div class="quiz-options">
-        <button onclick="checkAnswer(false)">A. 電影院</button>
-        <button onclick="checkAnswer(true)">B. 海邊咖啡廳（正確答案）</button>
-        <button onclick="checkAnswer(false)">C. 甜品店</button>
+        <button onclick="checkAnswer(false)">A. 一起在雨中散步的時候</button>
+        <button onclick="checkAnswer(true)">B. 只要身邊有你，每分每秒都是最難忘的 ❤️</button>
+        <button onclick="checkAnswer(false)">C. 第一次一起看海的那天</button>
       </div>
-      <div class="quiz-result" id="quiz-result"></div>
+      <div class="quiz-result" id="quizResult"></div>
     </div>
 
-    <!-- 2. 照片回憶 -->
+    <!-- 2. 照片相簿區 -->
     <div class="card">
-      <h2>📸 我們的回憶相簿</h2>
+      <h2>📸 我們的甜蜜銀河</h2>
       <div class="photo-grid">
-        <!-- 替換成你們的相片網址或圖片檔名 -->
-        <img src="https://picsum.photos/400/500?random=1" alt="回憶 1">
-        <img src="https://picsum.photos/400/500?random=2" alt="回憶 2">
-        <img src="https://picsum.photos/400/500?random=3" alt="回憶 3">
-        <img src="https://picsum.photos/400/500?random=4" alt="回憶 4">
+        <!-- 你可以把相片上傳到 GitHub，並將 src 替換為你的相片檔名，如 photo1.jpg -->
+        <div class="photo-item"><img src="https://picsum.photos/400/400?random=11" alt="照片 1"></div>
+        <div class="photo-item"><img src="https://picsum.photos/400/400?random=12" alt="照片 2"></div>
+        <div class="photo-item"><img src="https://picsum.photos/400/400?random=13" alt="照片 3"></div>
+        <div class="photo-item"><img src="https://picsum.photos/400/400?random=14" alt="照片 4"></div>
       </div>
     </div>
 
     <!-- 3. 影片專區 -->
     <div class="card">
-      <h2>🎬 甜蜜影片</h2>
+      <h2>🎬 七夕專屬放映室</h2>
       <div class="video-wrapper">
-        <!-- 可以放 YouTube 嵌入影片，或者將 <video> 標籤取消註釋使用本機影片 -->
+        <!-- 方式 A：放 YouTube 影片（替換網址中的 VIDEO_ID） -->
         <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-        <!-- <video controls src="your-video.mp4"></video> -->
+
+        <!-- 方式 B：如果你上傳了本機 mp4 影片到 GitHub，可使用下面這行（將上方 iframe 刪除）： -->
+        <!-- <video controls src="video.mp4" style="width:100%; height:100%;"></video> -->
       </div>
     </div>
   </div>
 
   <script>
-    // 音樂控制
+    // --- 1. 背景飄落愛心特效生成 ---
+    const heartsContainer = document.getElementById('heartsContainer');
+    const heartIcons = ['💖', '💕', '💗', '💓', '✨', '🌸', '❤️'];
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart-flake';
+      heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+      
+      const startLeft = Math.random() * 100; // 隨機水平起點
+      const duration = 4 + Math.random() * 5; // 4 ~ 9 秒飄落
+      const size = 16 + Math.random() * 18;   // 16px ~ 34px 大小
+      
+      heart.style.left = startLeft + 'vw';
+      heart.style.animationDuration = duration + 's';
+      heart.style.fontSize = size + 'px';
+      
+      heartsContainer.appendChild(heart);
+
+      // 動畫結束後自動清除元素
+      setTimeout(() => {
+        heart.remove();
+      }, duration * 1000);
+    }
+
+    // 每 300 毫秒產生一顆愛心
+    setInterval(createHeart, 300);
+
+    // --- 2. MP3 音樂控制 ---
     const music = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    const musicText = document.getElementById('musicText');
+
     function toggleMusic() {
       if (music.paused) {
-        music.play();
+        music.play().then(() => {
+          musicBtn.classList.add('playing');
+          musicText.textContent = '暫停背景音樂 ⏸️';
+        }).catch(err => {
+          alert('請先將你的 MP3 檔案上傳並命名為 music.mp3！');
+        });
       } else {
         music.pause();
+        musicBtn.classList.remove('playing');
+        musicText.textContent = '播放背景音樂 🎵';
       }
     }
 
-    // 問答互動
+    // --- 3. 互動問答 ---
     function checkAnswer(isCorrect) {
-      const resultDiv = document.getElementById('quiz-result');
+      const resultDiv = document.getElementById('quizResult');
       if (isCorrect) {
-        resultDiv.style.color = '#e63946';
-        resultDiv.textContent = '🎉 答對了！獎勵一個大大的擁抱 💕';
+        resultDiv.style.color = '#c9184a';
+        resultDiv.textContent = '🎉 答對了！七夕快樂，永遠愛你 💘';
       } else {
-        resultDiv.style.color = '#888';
-        resultDiv.textContent = '🙈 哎呀答錯了，罰你想起那一天！再試一次～';
+        resultDiv.style.color = '#7209b7';
+        resultDiv.textContent = '🙈 這也算對啦～但最棒的答案是身邊有你！再試試看～';
       }
     }
   </script>
