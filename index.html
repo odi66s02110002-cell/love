@@ -19,6 +19,7 @@
     }
 
     body {
+      /* 七夕浪漫星空背景圖 + 漸層遮罩 */
       background: linear-gradient(rgba(26, 8, 38, 0.65), rgba(45, 10, 60, 0.85)),
                   url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
       background-size: cover;
@@ -286,7 +287,7 @@
       animation: fadeIn 0.8s ease forwards;
     }
 
-    .reward-box img, .reward-box video {
+    .reward-box img {
       width: 100%;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -352,7 +353,7 @@
   <div class="container">
     <header>
       <h1>✨ 七夕快樂，老婆 ✨</h1>
-      <p>答對所有專屬問題，解鎖我們的浪漫回憶 💕</p>
+      <p>解鎖我們的浪漫回憶 💕</p>
       <button class="music-btn" id="musicBtn" onclick="manualToggleMusic()">🎵 音樂：播放中 (點擊切換)</button>
     </header>
 
@@ -367,7 +368,7 @@
       <div class="quiz-msg" id="msg1"></div>
       
       <div class="reward-box" id="reward1">
-        <img src="photo1.jpg" alt="照片 1" onerror="this.src='https://picsum.photos/600/400?random=1'">
+        <img src="photo1.jpeg" alt="照片 1">
         <p class="reward-text">📸 解鎖回憶：今年最開心的一天，因為有你在身邊 ❤️</p>
       </div>
     </div>
@@ -385,7 +386,7 @@
       <div class="quiz-msg" id="msg2"></div>
       
       <div class="reward-box" id="reward2">
-        <img src="photo2.jpg" alt="照片 2" onerror="this.src='https://picsum.photos/600/400?random=2'">
+        <img src="photo2.jpeg" alt="照片 2">
         <p class="reward-text">📸 解鎖回憶：每一次一起去現場聽歌的感動，我都好好珍藏著！</p>
       </div>
     </div>
@@ -401,7 +402,7 @@
       <div class="quiz-msg" id="msg3"></div>
       
       <div class="reward-box" id="reward3">
-        <img src="photo3.jpg" alt="照片 3" onerror="this.src='https://picsum.photos/600/400?random=3'">
+        <img src="photo3.jpeg" alt="照片 3">
         <p class="reward-text">📸 解鎖回憶：答對了！小白最可愛的黑色肉球左手 🐾</p>
       </div>
     </div>
@@ -416,12 +417,12 @@
         <button onclick="answerChoice(4, false)">3. 👃🏻</button>
         <button onclick="answerChoice(4, false)">4. 👄</button>
         <button onclick="answerChoice(4, false)">5. ❤️</button>
-        <button onclick="answerChoice(4, true)">6. 💪🏻 🦵🏼 👃🏻 👄 ❤️</button>
+        <button onclick="answerChoice(4, true)">6. 以上皆非是</button>
       </div>
       <div class="quiz-msg" id="msg4"></div>
       
       <div class="reward-box" id="reward4">
-        <img src="photo4.jpg" alt="照片 4" onerror="this.src='https://picsum.photos/600/400?random=4'">
+        <img src="photo4.jpeg" alt="照片 4">
         <p class="reward-text">📸 解鎖回憶：嘿嘿～老公整個人都是你的！🥰</p>
       </div>
     </div>
@@ -437,12 +438,12 @@
       <div class="quiz-msg" id="msg5"></div>
       
       <div class="reward-box" id="reward5">
-        <img src="photo5.jpg" alt="照片 5" onerror="this.src='https://picsum.photos/600/400?random=5'">
+        <img src="photo5.jpeg" alt="照片 5">
         <p class="reward-text">📸 解鎖回憶：第一站日本！未來還要牽著手去更多更多地方 🗾</p>
       </div>
     </div>
 
-    <!-- 問題 6 (非選擇題 - 壓軸影片) -->
+    <!-- 問題 6 (非選擇題 - 解鎖 photo6.jpeg) -->
     <div class="card" id="card6">
       <h2>第 6 關：奶茶的最愛 🐱</h2>
       <p class="quiz-question">問題：奶茶最喜歡</p>
@@ -453,10 +454,8 @@
       <div class="quiz-msg" id="msg6"></div>
       
       <div class="reward-box" id="reward6">
-        <video controls src="video.mp4" poster="https://picsum.photos/600/350?random=6">
-          你的瀏覽器不支援影片播放。
-        </video>
-        <p class="reward-text">🎬 解鎖影片：拍屁股時間到！🐱</p>
+        <img src="photo6.jpeg" alt="照片 6">
+        <p class="reward-text">📸 解鎖回憶：拍屁股時間到！🐱</p>
       </div>
     </div>
 
@@ -465,15 +464,15 @@
       <h2>第 7 關：終極心意 💘</h2>
       <p class="quiz-question">問題：你老公最喜歡你的</p>
       <div class="quiz-options">
-        <button onclick="answerChoice(7, true)">A. All about you</button>
-        <button onclick="answerChoice(7, true)">B. All about you</button>
-        <button onclick="answerChoice(7, true)">C. All about you</button>
-        <button onclick="answerChoice(7, true)">D. All about you</button>
+        <button onclick="answerChoice(7, true)">A. All about you 💕</button>
+        <button onclick="answerChoice(7, true)">B. All about you 💕</button>
+        <button onclick="answerChoice(7, true)">C. All about you 💕</button>
+        <button onclick="answerChoice(7, true)">D. All about you 💕</button>
       </div>
       <div class="quiz-msg" id="msg7"></div>
       
       <div class="reward-box" id="reward7">
-        <img src="photo7.gif" alt="動圖 7" onerror="this.src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1bWdpZXptb2xqdzh3aWVicHRva2Mwc3FwNGx0NnEzZ3VraXgwayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L4lvBzeGQwpATKpdPQ/giphy.gif'">
+        <img src="photo7.gif" alt="動圖 7">
         <p class="reward-text">💖 七夕快樂！你的一切，我都深愛著 🥰</p>
       </div>
     </div>
@@ -483,14 +482,13 @@
       <h2>📸 我們的甜蜜回憶相簿</h2>
       <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">點滴紀錄，都是幸福的模樣 ✨</p>
       <div class="gallery-grid">
-        <img src="gallery1.jpg" alt="回憶 1" onerror="this.src='https://picsum.photos/300/300?random=101'">
-        <img src="gallery2.jpg" alt="回憶 2" onerror="this.src='https://picsum.photos/300/300?random=102'">
-        <img src="gallery3.jpg" alt="回憶 3" onerror="this.src='https://picsum.photos/300/300?random=103'">
-        <img src="gallery4.jpg" alt="回憶 4" onerror="this.src='https://picsum.photos/300/300?random=104'">
-        <img src="gallery5.jpg" alt="回憶 5" onerror="this.src='https://picsum.photos/300/300?random=105'">
-        <img src="gallery6.jpg" alt="回憶 6" onerror="this.src='https://picsum.photos/300/300?random=106'">
-        <img src="gallery7.jpg" alt="回憶 7" onerror="this.src='https://picsum.photos/300/300?random=107'">
-        <img src="gallery8.jpg" alt="回憶 8" onerror="this.src='https://picsum.photos/300/300?random=108'">
+        <img src="gallery1.jpeg" alt="回憶 1">
+        <img src="gallery2.jpeg" alt="回憶 2">
+        <img src="gallery3.jpeg" alt="回憶 3">
+        <img src="gallery4.jpeg" alt="回憶 4">
+        <img src="gallery5.jpeg" alt="回憶 5">
+        <img src="gallery6.jpeg" alt="回憶 6">
+        <img src="gallery7.jpeg" alt="回憶 7">
       </div>
     </div>
 
@@ -510,14 +508,12 @@
           overlay.style.display = 'none';
         }, 500);
 
-        // 登入成功後立即無縫播放背景音樂
         startBackgroundMusic();
       } else {
         err.textContent = '❌ 帳號或密碼不正確喔，再試一次～';
       }
     }
 
-    // 登入框支援 Enter 鍵
     ['username', 'password'].forEach(id => {
       document.getElementById(id).addEventListener('keypress', function(e) {
         if (e.key === 'Enter') checkLogin();
@@ -604,7 +600,6 @@
       }
     }
 
-    // 支援 Enter 鍵送出答案
     [1, 3, 5, 6].forEach(num => {
       const el = document.getElementById(`input${num}`);
       if (el) {
