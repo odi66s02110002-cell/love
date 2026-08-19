@@ -19,7 +19,6 @@
     }
 
     body {
-      /* 七夕浪漫星空背景圖 + 漸層遮罩 */
       background: linear-gradient(rgba(26, 8, 38, 0.65), rgba(45, 10, 60, 0.85)),
                   url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
       background-size: cover;
@@ -31,6 +30,88 @@
       align-items: center;
       position: relative;
       overflow-x: hidden;
+    }
+
+    /* 登入遮罩層 */
+    #loginOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(20, 5, 30, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      transition: opacity 0.5s ease;
+    }
+
+    .login-card {
+      background: rgba(255, 255, 255, 0.96);
+      padding: 35px 25px;
+      border-radius: 20px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 204, 213, 0.6);
+    }
+
+    .login-card h2 {
+      color: var(--secondary-color);
+      margin-bottom: 8px;
+      font-size: 1.5rem;
+    }
+
+    .login-card p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 12px;
+      border: 1.5px solid #ffccd5;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .login-input:focus {
+      border-color: var(--primary-color);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg, var(--primary-color), #ff758f);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .login-btn:hover {
+      transform: scale(1.02);
+    }
+
+    .login-error {
+      color: #e63946;
+      font-size: 0.85rem;
+      margin-top: 10px;
+      min-height: 18px;
+      font-weight: bold;
     }
 
     /* 飄落愛心背景 */
@@ -250,10 +331,22 @@
 </head>
 <body>
 
+  <!-- 專屬登入介面遮罩 -->
+  <div id="loginOverlay">
+    <div class="login-card">
+      <h2>🔐 專屬私密空間</h2>
+      <p>請輸入專屬密鑰進入我們的七夕世界 ✨</p>
+      <input type="text" id="username" class="login-input" placeholder="登入帳號">
+      <input type="password" id="password" class="login-input" placeholder="密碼">
+      <button class="login-btn" onclick="checkLogin()">進入甜蜜專區 💕</button>
+      <div class="login-error" id="loginError"></div>
+    </div>
+  </div>
+
   <!-- 背景飄落愛心 -->
   <div class="hearts-container" id="heartsContainer"></div>
 
-  <!-- 背景音樂（音量 20%，點擊任意處開始） -->
+  <!-- 背景音樂（音量 20%） -->
   <audio id="bgMusic" loop src="music.mp3" preload="auto"></audio>
 
   <div class="container">
@@ -385,7 +478,7 @@
       </div>
     </div>
 
-    <!-- 底部甜蜜回憶相簿 (可放 7~8 張以上) -->
+    <!-- 底部甜蜜回憶相簿 -->
     <div class="card">
       <h2>📸 我們的甜蜜回憶相簿</h2>
       <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">點滴紀錄，都是幸福的模樣 ✨</p>
@@ -404,23 +497,43 @@
   </div>
 
   <script>
-    // --- 1. 背景音樂控制（音量 20%，點擊任意處開始） ---
+    // --- 1. 登入邏輯 ---
+    function checkLogin() {
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value.trim();
+      const err = document.getElementById('loginError');
+
+      if (u === '19890422' && p === '199053') {
+        const overlay = document.getElementById('loginOverlay');
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 500);
+
+        // 登入成功後立即無縫播放背景音樂
+        startBackgroundMusic();
+      } else {
+        err.textContent = '❌ 帳號或密碼不正確喔，再試一次～';
+      }
+    }
+
+    // 登入框支援 Enter 鍵
+    ['username', 'password'].forEach(id => {
+      document.getElementById(id).addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') checkLogin();
+      });
+    });
+
+    // --- 2. 背景音樂控制 ---
     const bgMusic = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
     bgMusic.volume = 0.2;
 
-    let hasStartedAudio = false;
-    function autoPlayAudio() {
-      if (!hasStartedAudio) {
-        bgMusic.play().then(() => {
-          hasStartedAudio = true;
-          musicBtn.textContent = '🎵 音樂：播放中 (點擊暫停)';
-        }).catch(() => {});
-      }
+    function startBackgroundMusic() {
+      bgMusic.play().then(() => {
+        musicBtn.textContent = '🎵 音樂：播放中 (點擊暫停)';
+      }).catch(() => {});
     }
-
-    document.body.addEventListener('click', autoPlayAudio, { once: true });
-    window.addEventListener('load', autoPlayAudio);
 
     function manualToggleMusic() {
       if (bgMusic.paused) {
@@ -432,7 +545,7 @@
       }
     }
 
-    // --- 2. 選擇題判定 ---
+    // --- 3. 選擇題判定 ---
     function answerChoice(qNum, isCorrect) {
       const msg = document.getElementById(`msg${qNum}`);
       const reward = document.getElementById(`reward${qNum}`);
@@ -447,7 +560,7 @@
       }
     }
 
-    // --- 3. 非選擇題判定 ---
+    // --- 4. 非選擇題判定 ---
     function checkInput(qNum) {
       const inputVal = document.getElementById(`input${qNum}`).value.trim().toLowerCase();
       const msg = document.getElementById(`msg${qNum}`);
@@ -491,7 +604,7 @@
       }
     }
 
-    // 支援 Enter 鍵送出
+    // 支援 Enter 鍵送出答案
     [1, 3, 5, 6].forEach(num => {
       const el = document.getElementById(`input${num}`);
       if (el) {
@@ -501,7 +614,7 @@
       }
     });
 
-    // --- 4. 飄落愛心動畫 ---
+    // --- 5. 飄落愛心動畫 ---
     const heartsContainer = document.getElementById('heartsContainer');
     const heartIcons = ['💖', '💕', '💗', '💓', '✨', '🌸', '❤️'];
 
