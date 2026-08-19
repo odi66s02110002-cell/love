@@ -8,7 +8,6 @@
     :root {
       --primary-color: #ff4d6d;
       --secondary-color: #c9184a;
-      --bg-gradient: linear-gradient(135deg, #1a0826 0%, #3a0ca3 50%, #7209b7 100%);
       --card-bg: rgba(255, 255, 255, 0.95);
     }
 
@@ -20,7 +19,10 @@
     }
 
     body {
-      background: var(--bg-gradient);
+      /* 七夕浪漫星空背景圖 + 漸層遮罩 */
+      background: linear-gradient(rgba(26, 8, 38, 0.65), rgba(45, 10, 60, 0.85)),
+                  url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
       min-height: 100vh;
       color: #333;
       padding: 30px 15px 60px;
@@ -69,7 +71,7 @@
       text-align: center;
       padding: 10px 0 10px;
       color: #fff;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     header h1 {
@@ -87,7 +89,7 @@
 
     .music-btn {
       margin-top: 12px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.25);
       border: 1px solid #ffccd5;
       color: white;
       padding: 7px 18px;
@@ -99,15 +101,15 @@
     }
 
     .music-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.4);
     }
 
-    /* 問答關卡卡片 */
+    /* 卡片通用樣式 */
     .card {
       background: var(--card-bg);
       border-radius: 18px;
       padding: 22px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
@@ -127,7 +129,7 @@
       line-height: 1.5;
     }
 
-    /* 選擇題選項按鈕 */
+    /* 選擇題選項 */
     .quiz-options button {
       display: block;
       width: 100%;
@@ -149,7 +151,7 @@
       transform: translateX(4px);
     }
 
-    /* 文字輸入題樣式 */
+    /* 文字輸入題 */
     .input-group {
       display: flex;
       gap: 10px;
@@ -194,7 +196,7 @@
       min-height: 20px;
     }
 
-    /* 解鎖回憶區塊（預設隱藏） */
+    /* 解鎖區塊 */
     .reward-box {
       display: none;
       margin-top: 16px;
@@ -219,6 +221,27 @@
       font-weight: 500;
     }
 
+    /* 底部相簿集 */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.05);
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -230,7 +253,7 @@
   <!-- 背景飄落愛心 -->
   <div class="hearts-container" id="heartsContainer"></div>
 
-  <!-- 背景音樂（音量 20%，點擊頁面任意處立即開始） -->
+  <!-- 背景音樂（音量 20%，點擊任意處開始） -->
   <audio id="bgMusic" loop src="music.mp3" preload="auto"></audio>
 
   <div class="container">
@@ -243,9 +266,9 @@
     <!-- 問題 1 (非選擇題) -->
     <div class="card" id="card1">
       <h2>第 1 關：特別的日子 📅</h2>
-      <p class="quiz-question">問題：今年最開心的一天是哪一天？</p>
+      <p class="quiz-question">問題：今年最開心的一天</p>
       <div class="input-group">
-        <input type="text" id="input1" placeholder="請輸入日期（例如：4月22日）">
+        <input type="text" id="input1" placeholder="請輸入答案">
         <button onclick="checkInput(1)">送出答案</button>
       </div>
       <div class="quiz-msg" id="msg1"></div>
@@ -259,10 +282,10 @@
     <!-- 問題 2 (選擇題) -->
     <div class="card" id="card2">
       <h2>第 2 關：音樂現場 🎤</h2>
-      <p class="quiz-question">問題：哪一個【不是】我們一起看過的演唱會？</p>
+      <p class="quiz-question">問題：那個不是一起看過的演唱會</p>
       <div class="quiz-options">
-        <button onclick="answerChoice(2, false)">A. Eason Chan (陳奕迅)</button>
-        <button onclick="answerChoice(2, true)">B. Jay Chou (周杰倫)</button>
+        <button onclick="answerChoice(2, false)">A. Eason Chan</button>
+        <button onclick="answerChoice(2, true)">B. Jay Chou</button>
         <button onclick="answerChoice(2, false)">C. ONE OK ROCK</button>
         <button onclick="answerChoice(2, false)">D. Ed Sheeran</button>
       </div>
@@ -277,9 +300,9 @@
     <!-- 問題 3 (非選擇題) -->
     <div class="card" id="card3">
       <h2>第 3 關：小白的秘密 🐾</h2>
-      <p class="quiz-question">問題：小白的哪一隻腳是黑色肉球？</p>
+      <p class="quiz-question">問題：小白的那只腳是黑色肉球?</p>
       <div class="input-group">
-        <input type="text" id="input3" placeholder="請輸入答案（例如：左手 / 右腳）">
+        <input type="text" id="input3" placeholder="請輸入答案">
         <button onclick="checkInput(3)">送出答案</button>
       </div>
       <div class="quiz-msg" id="msg3"></div>
@@ -290,17 +313,17 @@
       </div>
     </div>
 
-    <!-- 問題 4 (選擇題) -->
+    <!-- 問題 4 (選擇題 - 純表情) -->
     <div class="card" id="card4">
       <h2>第 4 關：致命吸引力 💖</h2>
-      <p class="quiz-question">問題：你老公最吸引你的部位是？</p>
+      <p class="quiz-question">問題：你老公最吸引你部位</p>
       <div class="quiz-options">
-        <button onclick="answerChoice(4, false)">1: 手臂肌肉 💪🏻</button>
-        <button onclick="answerChoice(4, false)">2: 腿 🦵🏼</button>
-        <button onclick="answerChoice(4, false)">3: 鼻子 👃🏻</button>
-        <button onclick="answerChoice(4, false)">4: 嘴唇 👄</button>
-        <button onclick="answerChoice(4, false)">5: 愛你的心 ❤️</button>
-        <button onclick="answerChoice(4, true)">6: 以上皆是 🥰 (全都要！)</button>
+        <button onclick="answerChoice(4, false)">1. 💪🏻</button>
+        <button onclick="answerChoice(4, false)">2. 🦵🏼</button>
+        <button onclick="answerChoice(4, false)">3. 👃🏻</button>
+        <button onclick="answerChoice(4, false)">4. 👄</button>
+        <button onclick="answerChoice(4, false)">5. ❤️</button>
+        <button onclick="answerChoice(4, true)">6. 💪🏻 🦵🏼 👃🏻 👄 ❤️</button>
       </div>
       <div class="quiz-msg" id="msg4"></div>
       
@@ -313,9 +336,9 @@
     <!-- 問題 5 (非選擇題) -->
     <div class="card" id="card5">
       <h2>第 5 關：旅途足跡 ✈️</h2>
-      <p class="quiz-question">問題：我們第一個一起去旅行的國家是哪裡？</p>
+      <p class="quiz-question">問題：第一個一起去旅行的國家</p>
       <div class="input-group">
-        <input type="text" id="input5" placeholder="請輸入國家名稱">
+        <input type="text" id="input5" placeholder="請輸入答案">
         <button onclick="checkInput(5)">送出答案</button>
       </div>
       <div class="quiz-msg" id="msg5"></div>
@@ -329,19 +352,52 @@
     <!-- 問題 6 (非選擇題 - 壓軸影片) -->
     <div class="card" id="card6">
       <h2>第 6 關：奶茶的最愛 🐱</h2>
-      <p class="quiz-question">問題：奶茶最喜歡什麼？</p>
+      <p class="quiz-question">問題：奶茶最喜歡</p>
       <div class="input-group">
         <input type="text" id="input6" placeholder="請輸入答案">
         <button onclick="checkInput(6)">送出答案</button>
       </div>
       <div class="quiz-msg" id="msg6"></div>
       
-      <!-- 壓軸解鎖影片 -->
       <div class="reward-box" id="reward6">
         <video controls src="video.mp4" poster="https://picsum.photos/600/350?random=6">
           你的瀏覽器不支援影片播放。
         </video>
-        <p class="reward-text">🎬 七夕壓軸驚喜：七夕快樂！永遠愛你，往後餘生都要一起走下去 💕</p>
+        <p class="reward-text">🎬 解鎖影片：拍屁股時間到！🐱</p>
+      </div>
+    </div>
+
+    <!-- 問題 7 (選擇題 - GIF 動圖解鎖) -->
+    <div class="card" id="card7">
+      <h2>第 7 關：終極心意 💘</h2>
+      <p class="quiz-question">問題：你老公最喜歡你的</p>
+      <div class="quiz-options">
+        <button onclick="answerChoice(7, true)">A. All about you</button>
+        <button onclick="answerChoice(7, true)">B. All about you</button>
+        <button onclick="answerChoice(7, true)">C. All about you</button>
+        <button onclick="answerChoice(7, true)">D. All about you</button>
+      </div>
+      <div class="quiz-msg" id="msg7"></div>
+      
+      <div class="reward-box" id="reward7">
+        <img src="photo7.gif" alt="動圖 7" onerror="this.src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1bWdpZXptb2xqdzh3aWVicHRva2Mwc3FwNGx0NnEzZ3VraXgwayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L4lvBzeGQwpATKpdPQ/giphy.gif'">
+        <p class="reward-text">💖 七夕快樂！你的一切，我都深愛著 🥰</p>
+      </div>
+    </div>
+
+    <!-- 底部甜蜜回憶相簿 (可放 7~8 張以上) -->
+    <div class="card">
+      <h2>📸 我們的甜蜜回憶相簿</h2>
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">點滴紀錄，都是幸福的模樣 ✨</p>
+      <div class="gallery-grid">
+        <img src="gallery1.jpg" alt="回憶 1" onerror="this.src='https://picsum.photos/300/300?random=101'">
+        <img src="gallery2.jpg" alt="回憶 2" onerror="this.src='https://picsum.photos/300/300?random=102'">
+        <img src="gallery3.jpg" alt="回憶 3" onerror="this.src='https://picsum.photos/300/300?random=103'">
+        <img src="gallery4.jpg" alt="回憶 4" onerror="this.src='https://picsum.photos/300/300?random=104'">
+        <img src="gallery5.jpg" alt="回憶 5" onerror="this.src='https://picsum.photos/300/300?random=105'">
+        <img src="gallery6.jpg" alt="回憶 6" onerror="this.src='https://picsum.photos/300/300?random=106'">
+        <img src="gallery7.jpg" alt="回憶 7" onerror="this.src='https://picsum.photos/300/300?random=107'">
+        <img src="gallery8.jpg" alt="回憶 8" onerror="this.src='https://picsum.photos/300/300?random=108'">
       </div>
     </div>
 
@@ -391,7 +447,7 @@
       }
     }
 
-    // --- 3. 非選擇題判定 (支援防呆輸入) ---
+    // --- 3. 非選擇題判定 ---
     function checkInput(qNum) {
       const inputVal = document.getElementById(`input${qNum}`).value.trim().toLowerCase();
       const msg = document.getElementById(`msg${qNum}`);
@@ -435,7 +491,7 @@
       }
     }
 
-    // 支援按下 Enter 鍵送出答案
+    // 支援 Enter 鍵送出
     [1, 3, 5, 6].forEach(num => {
       const el = document.getElementById(`input${num}`);
       if (el) {
