@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>七夕快樂 ❤️ 我們的專屬回憶</title>
+  <title>七夕快樂 ❤️ 我們的專屬解鎖回憶</title>
   <style>
     :root {
       --primary-color: #ff4d6d;
       --secondary-color: #c9184a;
-      --accent-color: #ff758f;
       --bg-gradient: linear-gradient(135deg, #1a0826 0%, #3a0ca3 50%, #7209b7 100%);
-      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-bg: rgba(255, 255, 255, 0.95);
     }
 
     * {
@@ -32,7 +31,7 @@
       overflow-x: hidden;
     }
 
-    /* 飄落愛心背景動畫容器 */
+    /* 飄落愛心背景 */
     .hearts-container {
       position: fixed;
       top: 0;
@@ -48,30 +47,17 @@
       position: absolute;
       top: -10%;
       user-select: none;
-      animation-name: heartFall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
+      animation: heartFall linear infinite;
     }
 
     @keyframes heartFall {
-      0% {
-        top: -10%;
-        transform: translateX(0) rotate(0deg) scale(0.8);
-        opacity: 0.9;
-      }
-      50% {
-        transform: translateX(30px) rotate(180deg) scale(1.1);
-      }
-      100% {
-        top: 105%;
-        transform: translateX(-30px) rotate(360deg) scale(0.8);
-        opacity: 0.2;
-      }
+      0% { top: -10%; transform: translateX(0) rotate(0deg) scale(0.8); opacity: 0.9; }
+      50% { transform: translateX(30px) rotate(180deg) scale(1.1); }
+      100% { top: 105%; transform: translateX(-30px) rotate(360deg) scale(0.8); opacity: 0.2; }
     }
 
-    /* 主內容容器 */
     .container {
-      max-width: 680px;
+      max-width: 650px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -79,10 +65,9 @@
       z-index: 2;
     }
 
-    /* 頂部標題區 */
     header {
       text-align: center;
-      padding: 20px 10px;
+      padding: 10px 0 20px;
       color: #fff;
       text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
@@ -100,84 +85,53 @@
       opacity: 0.9;
     }
 
-    /* 音樂播放器按鈕 */
-    .music-player-wrap {
-      margin-top: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
     .music-btn {
-      background: linear-gradient(45deg, #ff4d6d, #ff758f);
-      border: none;
+      margin-top: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid #ffccd5;
       color: white;
-      padding: 10px 22px;
-      border-radius: 30px;
-      font-size: 15px;
-      font-weight: bold;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
+      backdrop-filter: blur(5px);
     }
 
-    .music-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(255, 77, 109, 0.6);
-    }
-
-    .music-btn.playing .disc-icon {
-      animation: spin 3s linear infinite;
-    }
-
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-
-    /* 卡片通用設計 */
+    /* 問答關卡卡片 */
     .card {
       background: var(--card-bg);
       border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(8px);
+      padding: 22px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
       border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     .card h2 {
       color: var(--secondary-color);
-      margin-bottom: 16px;
-      font-size: 1.3rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 2px dashed #ffccd5;
-      padding-bottom: 8px;
+      margin-bottom: 14px;
+      font-size: 1.25rem;
+      border-left: 4px solid var(--primary-color);
+      padding-left: 10px;
     }
 
-    /* 1. 互動問答 */
-    .quiz-box p {
+    .quiz-question {
       font-size: 1.05rem;
       margin-bottom: 14px;
       font-weight: 600;
-      color: #444;
+      color: #333;
     }
 
     .quiz-options button {
       display: block;
       width: 100%;
-      padding: 12px 16px;
-      margin-bottom: 10px;
+      padding: 12px 15px;
+      margin-bottom: 8px;
       background: #fff;
       border: 1.5px solid #ffccd5;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 15px;
-      color: #555;
+      color: #444;
       text-align: left;
       transition: all 0.2s;
     }
@@ -185,126 +139,164 @@
     .quiz-options button:hover {
       background: #fff0f3;
       border-color: var(--primary-color);
-      transform: translateX(4px);
     }
 
-    .quiz-result {
-      margin-top: 14px;
+    .quiz-msg {
+      margin-top: 10px;
       font-weight: bold;
-      text-align: center;
-      min-height: 24px;
-      font-size: 1.05rem;
+      font-size: 0.95rem;
     }
 
-    /* 2. 相簿 */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-      gap: 12px;
+    /* 解鎖內容區（預設隱藏） */
+    .reward-box {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed #ffb3c1;
+      animation: fadeIn 0.8s ease forwards;
     }
 
-    .photo-item {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      aspect-ratio: 1;
-    }
-
-    .photo-item img {
+    .reward-box img, .reward-box video {
       width: 100%;
-      height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       object-fit: cover;
-      transition: transform 0.3s ease;
+      max-height: 400px;
     }
 
-    .photo-item:hover img {
-      transform: scale(1.08);
+    .reward-text {
+      margin-top: 10px;
+      color: #555;
+      font-size: 0.95rem;
+      text-align: center;
     }
 
-    /* 3. 影片 */
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #000;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
-
-    .video-wrapper iframe, .video-wrapper video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <!-- 背景飄落愛心 -->
+  <!-- 飄落愛心背景 -->
   <div class="hearts-container" id="heartsContainer"></div>
 
+  <!-- 背景音樂（靜音起手，點擊即播，音量已設為 20%） -->
+  <audio id="bgMusic" loop src="music.mp3" preload="auto"></audio>
+
   <div class="container">
-    <!-- 頂部與音樂播放 -->
     <header>
       <h1>✨ 七夕快樂，我的摯愛 ✨</h1>
-      <p>願銀河浪漫，不及我們眼中的星光 🌌</p>
-      
-      <div class="music-player-wrap">
-        <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
-          <span class="disc-icon">💿</span> <span id="musicText">點擊播放專屬音樂</span>
-        </button>
-        <!-- 
-          【自訂 MP3 設定】：
-          如果你的 MP3 上傳到同一個 GitHub 庫且檔名為 music.mp3，請將 src 改為 "music.mp3"
-        -->
-        <audio id="bgMusic" loop src="music.mp3"></audio>
-      </div>
+      <p>答對所有問題，解鎖我們的專屬回憶片段 💖</p>
+      <button class="music-btn" id="musicBtn" onclick="manualToggleMusic()">🎵 音樂：播放中 (點擊切換)</button>
     </header>
 
-    <!-- 1. 互動問答區 -->
-    <div class="card quiz-box">
-      <h2>💌 七夕小默契測驗</h2>
-      <p>問題：在你的心目中，我們一起度過最難忘的時刻是？</p>
+    <!-- 第 1 關：解鎖相片 -->
+    <div class="card" id="card1">
+      <h2>關卡 1：初見的心動 💓</h2>
+      <p class="quiz-question">問題：我們第一次正式約會那天，天氣如何？</p>
       <div class="quiz-options">
-        <button onclick="checkAnswer(false)">A. 一起在雨中散步的時候</button>
-        <button onclick="checkAnswer(true)">B. 只要身邊有你，每分每秒都是最難忘的 ❤️</button>
-        <button onclick="checkAnswer(false)">C. 第一次一起看海的那天</button>
+        <button onclick="answerQuiz(1, false)">A. 下著傾盆大雨</button>
+        <button onclick="answerQuiz(1, true)">B. 陽光剛好，微風很溫柔（正確答案）</button>
+        <button onclick="answerQuiz(1, false)">C. 寒冷下雪天</button>
       </div>
-      <div class="quiz-result" id="quizResult"></div>
-    </div>
-
-    <!-- 2. 照片相簿區 -->
-    <div class="card">
-      <h2>📸 我們的甜蜜銀河</h2>
-      <div class="photo-grid">
-        <!-- 你可以把相片上傳到 GitHub，並將 src 替換為你的相片檔名，如 photo1.jpg -->
-        <div class="photo-item"><img src="https://picsum.photos/400/400?random=11" alt="照片 1"></div>
-        <div class="photo-item"><img src="https://picsum.photos/400/400?random=12" alt="照片 2"></div>
-        <div class="photo-item"><img src="https://picsum.photos/400/400?random=13" alt="照片 3"></div>
-        <div class="photo-item"><img src="https://picsum.photos/400/400?random=14" alt="照片 4"></div>
+      <div class="quiz-msg" id="msg1"></div>
+      
+      <!-- 解鎖展示的相片 -->
+      <div class="reward-box" id="reward1">
+        <img src="photo1.jpg" alt="回憶照片 1" onerror="this.src='https://picsum.photos/600/400?random=21'">
+        <p class="reward-text">📸 解鎖回憶：那一天見到你，心跳就漏了一拍！</p>
       </div>
     </div>
 
-    <!-- 3. 影片專區 -->
-    <div class="card">
-      <h2>🎬 七夕專屬放映室</h2>
-      <div class="video-wrapper">
-        <!-- 方式 A：放 YouTube 影片（替換網址中的 VIDEO_ID） -->
-        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-
-        <!-- 方式 B：如果你上傳了本機 mp4 影片到 GitHub，可使用下面這行（將上方 iframe 刪除）： -->
-        <!-- <video controls src="video.mp4" style="width:100%; height:100%;"></video> -->
+    <!-- 第 2 關：解鎖相片 -->
+    <div class="card" id="card2">
+      <h2>關卡 2：生活的小默契 🍰</h2>
+      <p class="quiz-question">問題：在我們一起吃過的美食裡，我最常跟你搶著吃的是？</p>
+      <div class="quiz-options">
+        <button onclick="answerQuiz(2, false)">A. 沙律蔬菜</button>
+        <button onclick="answerQuiz(2, true)">B. 最後一口最好吃的甜品/薯條 ❤️</button>
+        <button onclick="answerQuiz(2, false)">C. 苦瓜湯</button>
+      </div>
+      <div class="quiz-msg" id="msg2"></div>
+      
+      <!-- 解鎖展示的相片 -->
+      <div class="reward-box" id="reward2">
+        <img src="photo2.jpg" alt="回憶照片 2" onerror="this.src='https://picsum.photos/600/400?random=22'">
+        <p class="reward-text">📸 解鎖回憶：跟你在一起，連最簡單的食物都變得超好吃～</p>
       </div>
     </div>
+
+    <!-- 第 3 關：解鎖影片 (MP4) -->
+    <div class="card" id="card3">
+      <h2>關卡 3：終極告白 🎬</h2>
+      <p class="quiz-question">問題：在未來的日子裡，我想和誰一起看每一年的七夕銀河？</p>
+      <div class="quiz-options">
+        <button onclick="answerQuiz(3, true)">A. 當然是眼前最可愛的你 💕</button>
+        <button onclick="answerQuiz(3, false)">B. 別人</button>
+      </div>
+      <div class="quiz-msg" id="msg3"></div>
+      
+      <!-- 解鎖展示的 MP4 影片 -->
+      <div class="reward-box" id="reward3">
+        <video controls src="video.mp4" poster="https://picsum.photos/600/350?random=23">
+          你的瀏覽器不支援影片播放。
+        </video>
+        <p class="reward-text">🎬 解鎖影片：七夕快樂！永遠愛你，往後餘生都有你 🥰</p>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // --- 1. 背景飄落愛心特效生成 ---
+    // --- 1. 背景音樂控制（自動低音量播放） ---
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
+    bgMusic.volume = 0.2; // 設定音量為 20%
+
+    let hasStartedAudio = false;
+    function autoPlayAudio() {
+      if (!hasStartedAudio) {
+        bgMusic.play().then(() => {
+          hasStartedAudio = true;
+          musicBtn.textContent = '🎵 音樂：播放中 (點擊暫停)';
+        }).catch(() => {
+          // 瀏覽器若仍攔截，點擊頁面任意處即可觸發
+        });
+      }
+    }
+
+    // 只要對方點擊螢幕任意位置，即刻無縫開始播放音樂
+    document.body.addEventListener('click', autoPlayAudio, { once: true });
+    window.addEventListener('load', autoPlayAudio);
+
+    function manualToggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicBtn.textContent = '🎵 音樂：播放中 (點擊暫停)';
+      } else {
+        bgMusic.pause();
+        musicBtn.textContent = '⏸️ 音樂：已暫停 (點擊播放)';
+      }
+    }
+
+    // --- 2. 問答互動解鎖相片 / 影片 ---
+    function answerQuiz(level, isCorrect) {
+      const msg = document.getElementById(`msg${level}`);
+      const reward = document.getElementById(`reward${level}`);
+
+      if (isCorrect) {
+        msg.style.color = '#c9184a';
+        msg.textContent = '🎉 答對了！恭喜解鎖專屬回憶～ ✨';
+        reward.style.display = 'block';
+      } else {
+        msg.style.color = '#7209b7';
+        msg.textContent = '🙈 哎呀答錯了，罰你想起那一天！再試一次～';
+      }
+    }
+
+    // --- 3. 背景飄落愛心特效 ---
     const heartsContainer = document.getElementById('heartsContainer');
     const heartIcons = ['💖', '💕', '💗', '💓', '✨', '🌸', '❤️'];
 
@@ -313,9 +305,9 @@
       heart.className = 'heart-flake';
       heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
       
-      const startLeft = Math.random() * 100; // 隨機水平起點
-      const duration = 4 + Math.random() * 5; // 4 ~ 9 秒飄落
-      const size = 16 + Math.random() * 18;   // 16px ~ 34px 大小
+      const startLeft = Math.random() * 100;
+      const duration = 4 + Math.random() * 5;
+      const size = 16 + Math.random() * 18;
       
       heart.style.left = startLeft + 'vw';
       heart.style.animationDuration = duration + 's';
@@ -323,46 +315,12 @@
       
       heartsContainer.appendChild(heart);
 
-      // 動畫結束後自動清除元素
       setTimeout(() => {
         heart.remove();
       }, duration * 1000);
     }
 
-    // 每 300 毫秒產生一顆愛心
-    setInterval(createHeart, 300);
-
-    // --- 2. MP3 音樂控制 ---
-    const music = document.getElementById('bgMusic');
-    const musicBtn = document.getElementById('musicBtn');
-    const musicText = document.getElementById('musicText');
-
-    function toggleMusic() {
-      if (music.paused) {
-        music.play().then(() => {
-          musicBtn.classList.add('playing');
-          musicText.textContent = '暫停背景音樂 ⏸️';
-        }).catch(err => {
-          alert('請先將你的 MP3 檔案上傳並命名為 music.mp3！');
-        });
-      } else {
-        music.pause();
-        musicBtn.classList.remove('playing');
-        musicText.textContent = '播放背景音樂 🎵';
-      }
-    }
-
-    // --- 3. 互動問答 ---
-    function checkAnswer(isCorrect) {
-      const resultDiv = document.getElementById('quizResult');
-      if (isCorrect) {
-        resultDiv.style.color = '#c9184a';
-        resultDiv.textContent = '🎉 答對了！七夕快樂，永遠愛你 💘';
-      } else {
-        resultDiv.style.color = '#7209b7';
-        resultDiv.textContent = '🙈 這也算對啦～但最棒的答案是身邊有你！再試試看～';
-      }
-    }
+    setInterval(createHeart, 320);
   </script>
 </body>
 </html>
