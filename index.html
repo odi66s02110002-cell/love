@@ -23,7 +23,7 @@
       background: var(--bg-gradient);
       min-height: 100vh;
       color: #333;
-      padding: 30px 15px;
+      padding: 30px 15px 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -67,7 +67,7 @@
 
     header {
       text-align: center;
-      padding: 10px 0 20px;
+      padding: 10px 0 10px;
       color: #fff;
       text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
@@ -90,11 +90,16 @@
       background: rgba(255, 255, 255, 0.2);
       border: 1px solid #ffccd5;
       color: white;
-      padding: 6px 16px;
+      padding: 7px 18px;
       border-radius: 20px;
       font-size: 13px;
       cursor: pointer;
       backdrop-filter: blur(5px);
+      transition: all 0.2s;
+    }
+
+    .music-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
     }
 
     /* 問答關卡卡片 */
@@ -119,8 +124,10 @@
       margin-bottom: 14px;
       font-weight: 600;
       color: #333;
+      line-height: 1.5;
     }
 
+    /* 選擇題選項按鈕 */
     .quiz-options button {
       display: block;
       width: 100%;
@@ -139,15 +146,55 @@
     .quiz-options button:hover {
       background: #fff0f3;
       border-color: var(--primary-color);
+      transform: translateX(4px);
+    }
+
+    /* 文字輸入題樣式 */
+    .input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1.5px solid #ffccd5;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary-color);
+    }
+
+    .input-group button {
+      padding: 12px 20px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .input-group button:hover {
+      background: var(--secondary-color);
     }
 
     .quiz-msg {
       margin-top: 10px;
       font-weight: bold;
       font-size: 0.95rem;
+      min-height: 20px;
     }
 
-    /* 解鎖內容區（預設隱藏） */
+    /* 解鎖回憶區塊（預設隱藏） */
     .reward-box {
       display: none;
       margin-top: 16px;
@@ -161,7 +208,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       object-fit: cover;
-      max-height: 400px;
+      max-height: 420px;
     }
 
     .reward-text {
@@ -169,6 +216,7 @@
       color: #555;
       font-size: 0.95rem;
       text-align: center;
+      font-weight: 500;
     }
 
     @keyframes fadeIn {
@@ -179,81 +227,131 @@
 </head>
 <body>
 
-  <!-- 飄落愛心背景 -->
+  <!-- 背景飄落愛心 -->
   <div class="hearts-container" id="heartsContainer"></div>
 
-  <!-- 背景音樂（靜音起手，點擊即播，音量已設為 20%） -->
+  <!-- 背景音樂（音量 20%，點擊頁面任意處立即開始） -->
   <audio id="bgMusic" loop src="music.mp3" preload="auto"></audio>
 
   <div class="container">
     <header>
-      <h1>✨ 七夕快樂，我的摯愛 ✨</h1>
-      <p>答對所有問題，解鎖我們的專屬回憶片段 💖</p>
+      <h1>✨ 七夕快樂，老婆 ✨</h1>
+      <p>答對所有專屬問題，解鎖我們的浪漫回憶 💕</p>
       <button class="music-btn" id="musicBtn" onclick="manualToggleMusic()">🎵 音樂：播放中 (點擊切換)</button>
     </header>
 
-    <!-- 第 1 關：解鎖相片 -->
+    <!-- 問題 1 (非選擇題) -->
     <div class="card" id="card1">
-      <h2>關卡 1：初見的心動 💓</h2>
-      <p class="quiz-question">問題：我們第一次正式約會那天，天氣如何？</p>
-      <div class="quiz-options">
-        <button onclick="answerQuiz(1, false)">A. 下著傾盆大雨</button>
-        <button onclick="answerQuiz(1, true)">B. 陽光剛好，微風很溫柔（正確答案）</button>
-        <button onclick="answerQuiz(1, false)">C. 寒冷下雪天</button>
+      <h2>第 1 關：特別的日子 📅</h2>
+      <p class="quiz-question">問題：今年最開心的一天是哪一天？</p>
+      <div class="input-group">
+        <input type="text" id="input1" placeholder="請輸入日期（例如：4月22日）">
+        <button onclick="checkInput(1)">送出答案</button>
       </div>
       <div class="quiz-msg" id="msg1"></div>
       
-      <!-- 解鎖展示的相片 -->
       <div class="reward-box" id="reward1">
-        <img src="photo1.jpg" alt="回憶照片 1" onerror="this.src='https://picsum.photos/600/400?random=21'">
-        <p class="reward-text">📸 解鎖回憶：那一天見到你，心跳就漏了一拍！</p>
+        <img src="photo1.jpg" alt="照片 1" onerror="this.src='https://picsum.photos/600/400?random=1'">
+        <p class="reward-text">📸 解鎖回憶：今年最開心的一天，因為有你在身邊 ❤️</p>
       </div>
     </div>
 
-    <!-- 第 2 關：解鎖相片 -->
+    <!-- 問題 2 (選擇題) -->
     <div class="card" id="card2">
-      <h2>關卡 2：生活的小默契 🍰</h2>
-      <p class="quiz-question">問題：在我們一起吃過的美食裡，我最常跟你搶著吃的是？</p>
+      <h2>第 2 關：音樂現場 🎤</h2>
+      <p class="quiz-question">問題：哪一個【不是】我們一起看過的演唱會？</p>
       <div class="quiz-options">
-        <button onclick="answerQuiz(2, false)">A. 沙律蔬菜</button>
-        <button onclick="answerQuiz(2, true)">B. 最後一口最好吃的甜品/薯條 ❤️</button>
-        <button onclick="answerQuiz(2, false)">C. 苦瓜湯</button>
+        <button onclick="answerChoice(2, false)">A. Eason Chan (陳奕迅)</button>
+        <button onclick="answerChoice(2, true)">B. Jay Chou (周杰倫)</button>
+        <button onclick="answerChoice(2, false)">C. ONE OK ROCK</button>
+        <button onclick="answerChoice(2, false)">D. Ed Sheeran</button>
       </div>
       <div class="quiz-msg" id="msg2"></div>
       
-      <!-- 解鎖展示的相片 -->
       <div class="reward-box" id="reward2">
-        <img src="photo2.jpg" alt="回憶照片 2" onerror="this.src='https://picsum.photos/600/400?random=22'">
-        <p class="reward-text">📸 解鎖回憶：跟你在一起，連最簡單的食物都變得超好吃～</p>
+        <img src="photo2.jpg" alt="照片 2" onerror="this.src='https://picsum.photos/600/400?random=2'">
+        <p class="reward-text">📸 解鎖回憶：每一次一起去現場聽歌的感動，我都好好珍藏著！</p>
       </div>
     </div>
 
-    <!-- 第 3 關：解鎖影片 (MP4) -->
+    <!-- 問題 3 (非選擇題) -->
     <div class="card" id="card3">
-      <h2>關卡 3：終極告白 🎬</h2>
-      <p class="quiz-question">問題：在未來的日子裡，我想和誰一起看每一年的七夕銀河？</p>
-      <div class="quiz-options">
-        <button onclick="answerQuiz(3, true)">A. 當然是眼前最可愛的你 💕</button>
-        <button onclick="answerQuiz(3, false)">B. 別人</button>
+      <h2>第 3 關：小白的秘密 🐾</h2>
+      <p class="quiz-question">問題：小白的哪一隻腳是黑色肉球？</p>
+      <div class="input-group">
+        <input type="text" id="input3" placeholder="請輸入答案（例如：左手 / 右腳）">
+        <button onclick="checkInput(3)">送出答案</button>
       </div>
       <div class="quiz-msg" id="msg3"></div>
       
-      <!-- 解鎖展示的 MP4 影片 -->
       <div class="reward-box" id="reward3">
-        <video controls src="video.mp4" poster="https://picsum.photos/600/350?random=23">
+        <img src="photo3.jpg" alt="照片 3" onerror="this.src='https://picsum.photos/600/400?random=3'">
+        <p class="reward-text">📸 解鎖回憶：答對了！小白最可愛的黑色肉球左手 🐾</p>
+      </div>
+    </div>
+
+    <!-- 問題 4 (選擇題) -->
+    <div class="card" id="card4">
+      <h2>第 4 關：致命吸引力 💖</h2>
+      <p class="quiz-question">問題：你老公最吸引你的部位是？</p>
+      <div class="quiz-options">
+        <button onclick="answerChoice(4, false)">1: 手臂肌肉 💪🏻</button>
+        <button onclick="answerChoice(4, false)">2: 腿 🦵🏼</button>
+        <button onclick="answerChoice(4, false)">3: 鼻子 👃🏻</button>
+        <button onclick="answerChoice(4, false)">4: 嘴唇 👄</button>
+        <button onclick="answerChoice(4, false)">5: 愛你的心 ❤️</button>
+        <button onclick="answerChoice(4, true)">6: 以上皆是 🥰 (全都要！)</button>
+      </div>
+      <div class="quiz-msg" id="msg4"></div>
+      
+      <div class="reward-box" id="reward4">
+        <img src="photo4.jpg" alt="照片 4" onerror="this.src='https://picsum.photos/600/400?random=4'">
+        <p class="reward-text">📸 解鎖回憶：嘿嘿～老公整個人都是你的！🥰</p>
+      </div>
+    </div>
+
+    <!-- 問題 5 (非選擇題) -->
+    <div class="card" id="card5">
+      <h2>第 5 關：旅途足跡 ✈️</h2>
+      <p class="quiz-question">問題：我們第一個一起去旅行的國家是哪裡？</p>
+      <div class="input-group">
+        <input type="text" id="input5" placeholder="請輸入國家名稱">
+        <button onclick="checkInput(5)">送出答案</button>
+      </div>
+      <div class="quiz-msg" id="msg5"></div>
+      
+      <div class="reward-box" id="reward5">
+        <img src="photo5.jpg" alt="照片 5" onerror="this.src='https://picsum.photos/600/400?random=5'">
+        <p class="reward-text">📸 解鎖回憶：第一站日本！未來還要牽著手去更多更多地方 🗾</p>
+      </div>
+    </div>
+
+    <!-- 問題 6 (非選擇題 - 壓軸影片) -->
+    <div class="card" id="card6">
+      <h2>第 6 關：奶茶的最愛 🐱</h2>
+      <p class="quiz-question">問題：奶茶最喜歡什麼？</p>
+      <div class="input-group">
+        <input type="text" id="input6" placeholder="請輸入答案">
+        <button onclick="checkInput(6)">送出答案</button>
+      </div>
+      <div class="quiz-msg" id="msg6"></div>
+      
+      <!-- 壓軸解鎖影片 -->
+      <div class="reward-box" id="reward6">
+        <video controls src="video.mp4" poster="https://picsum.photos/600/350?random=6">
           你的瀏覽器不支援影片播放。
         </video>
-        <p class="reward-text">🎬 解鎖影片：七夕快樂！永遠愛你，往後餘生都有你 🥰</p>
+        <p class="reward-text">🎬 七夕壓軸驚喜：七夕快樂！永遠愛你，往後餘生都要一起走下去 💕</p>
       </div>
     </div>
 
   </div>
 
   <script>
-    // --- 1. 背景音樂控制（自動低音量播放） ---
+    // --- 1. 背景音樂控制（音量 20%，點擊任意處開始） ---
     const bgMusic = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
-    bgMusic.volume = 0.2; // 設定音量為 20%
+    bgMusic.volume = 0.2;
 
     let hasStartedAudio = false;
     function autoPlayAudio() {
@@ -261,13 +359,10 @@
         bgMusic.play().then(() => {
           hasStartedAudio = true;
           musicBtn.textContent = '🎵 音樂：播放中 (點擊暫停)';
-        }).catch(() => {
-          // 瀏覽器若仍攔截，點擊頁面任意處即可觸發
-        });
+        }).catch(() => {});
       }
     }
 
-    // 只要對方點擊螢幕任意位置，即刻無縫開始播放音樂
     document.body.addEventListener('click', autoPlayAudio, { once: true });
     window.addEventListener('load', autoPlayAudio);
 
@@ -281,22 +376,76 @@
       }
     }
 
-    // --- 2. 問答互動解鎖相片 / 影片 ---
-    function answerQuiz(level, isCorrect) {
-      const msg = document.getElementById(`msg${level}`);
-      const reward = document.getElementById(`reward${level}`);
+    // --- 2. 選擇題判定 ---
+    function answerChoice(qNum, isCorrect) {
+      const msg = document.getElementById(`msg${qNum}`);
+      const reward = document.getElementById(`reward${qNum}`);
 
       if (isCorrect) {
         msg.style.color = '#c9184a';
-        msg.textContent = '🎉 答對了！恭喜解鎖專屬回憶～ ✨';
+        msg.textContent = '🎉 答對了！恭喜解鎖回憶～ ✨';
         reward.style.display = 'block';
       } else {
         msg.style.color = '#7209b7';
-        msg.textContent = '🙈 哎呀答錯了，罰你想起那一天！再試一次～';
+        msg.textContent = '🙈 哎呀答錯囉，再認真想想看！';
       }
     }
 
-    // --- 3. 背景飄落愛心特效 ---
+    // --- 3. 非選擇題判定 (支援防呆輸入) ---
+    function checkInput(qNum) {
+      const inputVal = document.getElementById(`input${qNum}`).value.trim().toLowerCase();
+      const msg = document.getElementById(`msg${qNum}`);
+      const reward = document.getElementById(`reward${qNum}`);
+
+      let isCorrect = false;
+
+      // 題 1：4月22
+      if (qNum === 1) {
+        const clean = inputVal.replace(/[\s\/\-\.]/g, '');
+        if (clean.includes('4月22') || clean === '0422' || clean === '422') {
+          isCorrect = true;
+        }
+      } 
+      // 題 3：左手
+      else if (qNum === 3) {
+        if (inputVal.includes('左手') || inputVal.includes('左前腳') || inputVal.includes('左前足')) {
+          isCorrect = true;
+        }
+      } 
+      // 題 5：日本
+      else if (qNum === 5) {
+        if (inputVal.includes('日本') || inputVal.includes('japan')) {
+          isCorrect = true;
+        }
+      } 
+      // 題 6：拍屁股
+      else if (qNum === 6) {
+        if (inputVal.includes('拍屁股') || inputVal.includes('拍屁') || inputVal.includes('拍pp')) {
+          isCorrect = true;
+        }
+      }
+
+      if (isCorrect) {
+        msg.style.color = '#c9184a';
+        msg.textContent = '🎉 答對了！默契 100 分～ ✨';
+        reward.style.display = 'block';
+      } else {
+        msg.style.color = '#7209b7';
+        msg.textContent = '🙈 答案不對喔（或換個寫法試試看～）';
+      }
+    }
+
+    // 支援按下 Enter 鍵送出答案
+    [1, 3, 5, 6].forEach(num => {
+      const el = document.getElementById(`input${num}`);
+      if (el) {
+        el.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') checkInput(num);
+        });
+      }
+    });
+
+    // --- 4. 飄落愛心動畫 ---
     const heartsContainer = document.getElementById('heartsContainer');
     const heartIcons = ['💖', '💕', '💗', '💓', '✨', '🌸', '❤️'];
 
